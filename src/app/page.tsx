@@ -24,7 +24,7 @@ export default function Home() {
   const [username, setUsername] = useState<string | null>(null);
   const [gameState, setGameState] = useState<QuizState>(INITIAL_STATE);
   const [filteredQuestions, setFilteredQuestions] = useState<Question[]>([]);
-  const [globalAnswers, setGlobalAnswers] = useState<Record<number, string>>({}); // Persisted answers for the user
+  const [globalAnswers, setGlobalAnswers] = useState<Record<string, string>>({}); // Persisted answers for the user
 
   // Load User and Answers on Mount
   useEffect(() => {

@@ -7,7 +7,7 @@ export interface Option {
 }
 
 export interface Question {
-    id: number;
+    id: string; // Changed from number to string to match data like "372-A"
     category: string;
     text: string;
     options: Option[];
@@ -17,7 +17,7 @@ export interface Question {
 }
 
 export interface QuizState {
-    answers: Record<number, string>; // questionId -> selectedOptionLabel
+    answers: Record<string, string>; // questionId -> selectedOptionLabel
     currentQuestionIndex: number;
     isComplete: boolean;
     score: number;

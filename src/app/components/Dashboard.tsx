@@ -7,7 +7,7 @@ import { CATEGORIES, QUESTIONS } from '@/lib/data';
 
 interface DashboardProps {
     username: string;
-    answers: Record<number, string>;
+    answers: Record<string, string>;
     onStart: (mode: 'study' | 'exam', category: string) => void;
     onLogout: () => void;
 }
@@ -17,9 +17,21 @@ export const Dashboard: React.FC<DashboardProps> = ({ username, answers, onStart
     const [timeLeft, setTimeLeft] = useState('');
 
     // Stats Calculation
-    const totalAnswered = Object.keys(answers).length;
     const totalQuestions = QUESTIONS.length; // 372
-    const progressPercent = Math.round((totalAnswered / totalQuestions) * 100) || 0;
+
+    // Calculate correct answers
+    const correctCount = Object.entries(answers).reduce((acc, [qId, selectedOption]) => {
+        const question = QUESTIONS.find(q => q.id === qId);
+        if (question && question.correctAnswer === selectedOption) {
+            return acc + 1;
+        }
+        return acc;
+    }, 0);
+
+    // Progress is based on CORRECT answers only
+    const progressPercent = Math.round((correctCount / totalQuestions) * 100) || 0;
+    const answeredCount = Object.keys(answers).length;
+    const wrongCount = answeredCount - correctCount;
 
     // Real School Stats
     const [schoolTotal, setSchoolTotal] = useState(0);
@@ -216,7 +228,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ username, answers, onStart
                     <div className="flex items-center justify-between mb-2">
                         <span className="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
                             <Trophy className="w-3 h-3 text-amber-500" />
-                            个人进度 Personal Progress (已刷 {totalAnswered} 题)
+                            个人进度 Personal Progress (已对 {correctCount} 题)
                         </span>
                         <span className="text-xs font-bold text-emerald-600 font-mono">{progressPercent}%</span>
                     </div>
@@ -229,11 +241,15 @@ export const Dashboard: React.FC<DashboardProps> = ({ username, answers, onStart
                     <div className="flex gap-6 mt-3">
                         <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                             <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                            <span>已掌握: {totalAnswered}</span>
+                            <span>已掌握: {correctCount}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                            <div className="w-1.5 h-1.5 rounded-full bg-rose-400" />
+                            <span>错题: {wrongCount}</span>
                         </div>
                         <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                             <div className="w-1.5 h-1.5 rounded-full bg-slate-300" />
-                            <span>未学习: {totalQuestions - totalAnswered}</span>
+                            <span>未学习: {totalQuestions - answeredCount}</span>
                         </div>
                     </div>
                 </section>
