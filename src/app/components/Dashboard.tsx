@@ -95,7 +95,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ username, answers, onStart
             <div className="md:w-5/12 lg:w-1/3 flex flex-col justify-center space-y-6 md:space-y-8">
                 <div className="space-y-4">
                     <img
-                        src="https://r2.wic.edu.kg/images/logo2.svg"
+                        src="https://r2.wic.edu.kg/images/logo-2.png"
                         alt="Wuhan City College Logo"
                         className="h-10 md:h-12 w-auto object-contain mb-2 origin-left"
                     />
