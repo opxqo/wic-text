@@ -1,26 +1,82 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+body {
+  font-family: 'Inter', var(--font-inter), sans-serif;
+  overscroll-behavior: none;
+  /* Advanced Ecological Mesh Gradient Background */
+  background-color: #f0fdf4; /* emerald-50 base */
+  background-image: 
+    radial-gradient(at 0% 0%, hsla(160, 40%, 15%, 1) 0, transparent 50%), 
+    radial-gradient(at 50% 0%, hsla(140, 50%, 25%, 1) 0, transparent 50%), 
+    radial-gradient(at 100% 0%, hsla(170, 60%, 20%, 1) 0, transparent 50%);
+  background-attachment: fixed;
+  background-size: cover;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Desktop-specific background enhancements */
+@media (min-width: 768px) {
+  body {
+    background-image: 
+      radial-gradient(at 0% 0%, hsla(160, 40%, 15%, 1) 0, transparent 50%), 
+      radial-gradient(at 50% 10%, hsla(140, 50%, 25%, 1) 0, transparent 50%), 
+      radial-gradient(at 100% 0%, hsla(170, 60%, 20%, 1) 0, transparent 50%),
+      radial-gradient(at 80% 50%, hsla(150, 60%, 60%, 0.1) 0, transparent 50%),
+      radial-gradient(at 0% 100%, hsla(180, 50%, 40%, 0.1) 0, transparent 50%);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s ease-in-out infinite;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent; 
+}
+::-webkit-scrollbar-thumb {
+  background: #a7f3d0; /* emerald-200 */
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #6ee7b7; /* emerald-300 */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Font Mono Override for specific elements */
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
 }
