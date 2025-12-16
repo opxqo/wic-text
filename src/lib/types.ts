@@ -7,7 +7,7 @@ export interface Option {
 }
 
 export interface Question {
-    id: string; // Changed from number to string to match data like "372-A"
+    id: string | number; // Changed from number to string to match data like "372-A", but allowed number for backward compat
     category: string;
     text: string;
     options: Option[];
